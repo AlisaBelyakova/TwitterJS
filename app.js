@@ -2,6 +2,9 @@ const express = require( 'express' );
 const app = express();  //create server 
 const nunjucks = require('nunjucks');
 
+const routes = require('./routes');
+app.use('/', routes);
+
 app.use(function(req, res, next) {
     // log each request to the console
     console.log(req.method, req.url);
@@ -25,20 +28,14 @@ let localVars = {
     ]
 };
 
-app.get('/hello', function(req, res){
-    res.render('index.html', localVars);
+app.get('/', function(req, res){
+    res.send('index.html'); //WHY we cannot use callback func
 });
 
 
-nunjucks.render('index.html', localVars, function(err, res) {
-    console.log(res);
-});
-    
-    
-    
-// const people = [{name: 'Mary'}, {name: 'Steve'}, {name: 'Jack'}];
-// res.render('index', {title: 'Title', people: people});
-
+// nunjucks.render('index.html', localVars, function(err, res) {
+//     console.log(res);
+// });
 
 const port = 3000;
 app.listen(port, function(){
